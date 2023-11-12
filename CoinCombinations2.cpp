@@ -36,26 +36,26 @@ int binpow(int base,int power)
      } 
 
 }
-const int mod = (int)1e9 + 7;
+const int mxM = 1e6 + 1,mxN = 100,mod = (int)1e9+7;
+int dp[mxM];	
+int a[mxN];
 void solve()
 {
-   	int n;
-   	cin >> n;
-   	int dp[n+1];
+   	int n,m;
+   	cin >> n >> m;
+   	
+   	for(int i = 0;n > i;i++) cin >> a[i];
    	dp[0] = 1;
-
-   	for(int i = 1;n >= i;i++)
+   	sort(a,a+n);
+   	for(int i = 0;n > i;i++)
    	{
-   		dp[i] = 0;
-   		for(int j = 1;min(i,6ll) >= j;j++)
+   		for(int j = a[i];m >= j;j++)
    		{
-   			dp[i] += dp[i-j];
-   			dp[i] %= mod;
+   			dp[j] = (dp[j] + dp[j - a[i]])%mod;
    		}
-
-   		//cout << dp[i] << " ";
    	}
-   	cout << dp[n] << endl;
+   	
+   	cout << dp[m] << endl;
 }
 
 
