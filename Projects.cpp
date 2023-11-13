@@ -36,32 +36,32 @@ int binpow(int base,int power)
      } 
 
 }
-int mxM = 1e6 + 5;
+const int mxN = 2 * 1e5 + 5;
+int dp[mxN];
 void solve()
 {
-   	int n,m;
-   	cin >> n >> m;
-   	int dp[mxM];	
-   	int a[n];
-   	for(int i = 0;n > i;i++) cin >> a[i];
+	int n;
+	cin >> n;
+   	ar<int,3> a[n];
+   	for(int i = 0;n > i;i++) cin >> a[i][1] >> a[i][0] >> a[i][2];
    	sort(a,a+n);
-   	dp[0] = 0;
-   	for(int i = 1;m >= i;i++)
-   	{		
-   		dp[i] = mxn;	
-   		for(int j = 0;n > j;j++)
-   		{
-   			if(i < a[j]) break;
-   			dp[i] += min(1 + dp[i - a[j]],dp[i]);
-   		}
-   		//cout << dp[i] << " ";
-   	}
-   	if(dp[m] == mxn)
+   	for(int i = 1;n >= i;i++)
    	{
-   		cout << "-1" << endl;
+   		dp[i] = a[i-1][2];
+   		ar<int,3> el = {a[i-1][1],-1,-1};
+   		auto h = lower_bound(a,a+n,el);
+   		if(h != a)
+   		{
+   			//cout << "h-a: " << h - a << endl;
+   			dp[i] = dp[(h-a)] + a[i-1][2];
+   		}
+
+   		dp[i] = max(dp[i],dp[i-1]);
+
+   		//cout << i << ": " << dp[i] << endl;
    	}
-   	else
-   	cout << dp[m] << endl;
+
+   	cout << dp[n] << endl;
 }
 
 
